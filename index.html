@@ -1216,19 +1216,24 @@
   });
 
   // ── SERVICE WORKER ──
+  // Fully automatic updates: as soon as a new sw.js is detected, it
+  // installs and activates itself (see skipWaiting()/clients.claim()
+  // in sw.js), then this page reloads once to pick up the new code.
+  // No confirm dialogs, no manual steps — this can never get stuck
+  // waiting on a click that never happens.
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
-      reg.addEventListener('updatefound', () => {
-        const w = reg.installing;
-        w.addEventListener('statechange', () => {
-          if (w.state === 'installed' && navigator.serviceWorker.controller) {
-            if (confirm('New version of Pocket Pay available. Reload?')) {
-              w.postMessage('skipWaiting');
-              window.location.reload();
-            }
-          }
-        });
-      });
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+
+    // updateViaCache: 'none' makes sure the browser never serves a
+    // cached copy of sw.js itself when checking for updates — it
+    // always asks the network whether sw.js has changed.
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(reg => {
+      reg.update();
     });
   }
 
