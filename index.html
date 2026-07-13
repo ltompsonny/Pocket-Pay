@@ -1091,7 +1091,7 @@
     const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const invNum = `INV-${year}${String(month).padStart(2,'0')}-${prac.id.replace('PR-','')}`;
     const invDate = new Date(year, month-1, new Date(year,month,0).getDate()).toLocaleDateString('en-AU');
-    const gstRow = prac.gst ? `<tr><td style="padding:8px 0;font-size:13px;border-bottom:1px solid #f5f5f5;">GST (10%)</td><td style="padding:8px 0;font-size:13px;text-align:right;">$\{fmt(gst)}</td></tr>` : '';
+    const gstRow = prac.gst ? `<tr><td style="padding:8px 0;font-size:13px;border-bottom:1px solid #f5f5f5;">GST (10%)</td><td style="padding:8px 0;font-size:13px;text-align:right;">${fmt(gst)}</td></tr>` : '';
     const gstNote = prac.gst ? 'GST registered · ABN: '+prac.abn : 'Not registered for GST · ABN: '+prac.abn;
 
     const win = window.open('', '_blank');
