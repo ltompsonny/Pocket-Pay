@@ -387,6 +387,7 @@
         <div class="prac-tabs">
           <button class="prac-tab active" id="pt-nicholas" onclick="setPrac('nicholas')">Nicholas Kluzek</button>
           <button class="prac-tab" id="pt-valerie" onclick="setPrac('valerie')">I Mun Lai</button>
+          <button class="prac-tab" id="pt-joshua" onclick="setPrac('joshua')">Joshua McVeigh</button>
         </div>
         <span class="field-label">Month</span>
         <div class="month-row">
@@ -437,6 +438,17 @@
       address: '2A Silverlake Crescent\nHighbury SA 5089',
       phone: '0404 141 138',
       gst: true
+    },
+    joshua: {
+      id: 'PR-3473305',         // PractitionerRole ID (for Invoice queries)
+      practitionerId: 'PR-2023721', // Practitioner ID (for InvoiceLine queries)
+      name: 'Joshua McVeigh',
+      abn: '76 476 963 196',
+      address: '11/15 Cedar Ave\nCampbelltown',
+      phone: '0411 322 118',
+      gst: false,
+      // Bank details for manual payment (not printed on payslip, for reference only):
+      // ING — Account name: Joshua McVeigh · BSB: 923100 · Account number: 826006764
     }
   };
 
@@ -476,7 +488,7 @@
 
   function setPrac(p) {
     activePrac = p;
-    ['nicholas', 'valerie'].forEach(id =>
+    ['nicholas', 'valerie', 'joshua'].forEach(id =>
       document.getElementById('pt-' + id).classList.toggle('active', id === p)
     );
     payData = null;
